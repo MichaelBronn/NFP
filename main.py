@@ -1,16 +1,33 @@
-# This is a sample Python script.
+import socket
+def client(text):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+    sock.connect(('', 8080))
+    text = bytes(text, encoding='utf-8')
+    sock.send(text)
+
+    sock.close()
+def server():
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    sock.bind(('', 8080))
+
+    sock.listen(5)
+    while True:
+        try:
+            client, address = sock.accept() #проверка на существование соединения
+
+        except KeyboardInterrupt:
+            sock.close()
+            break
+
+        else:
+            result = client.recv(1024)
+            client.close()
+
+def main():
+    pass
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    main()
